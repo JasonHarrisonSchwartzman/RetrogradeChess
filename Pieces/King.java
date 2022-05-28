@@ -58,21 +58,21 @@ public class King extends Piece{
         //WHITE
         Square[][] boardArray = board.getBoard();
         if (turn == GColor.WHITE) {
-            if (endSquare.getCoordinates().getCoordinate().equals("g1")) {
-                return !startSquare.getPiece().getHasMoved() && boardArray[0][7].getPiece().getName().equals("Rook") && !boardArray[0][7].getPiece().getHasMoved() && boardArray[0][5].getPiece().getName().equals("Empty") && boardArray[0][6].getPiece().getName().equals("Empty") && !board.canAnyPieceMove(board.getSquare("e1"), GColor.BLACK) && !board.canAnyPieceMove(board.getSquare("f1"), GColor.BLACK) && !board.canAnyPieceMove(board.getSquare("g1"), GColor.BLACK);
+            if (startSquare.getCoordinates().getCoordinate().equals("g1")) {
+                return boardArray[0][5].getPiece().getName().equals("Rook") && !boardArray[0][7].hasPiece() && !boardArray[0][4].hasPiece() && !board.canAnyPieceMove(board.getSquare("e1"), GColor.BLACK) && !board.canAnyPieceMove(board.getSquare("f1"), GColor.BLACK) && !board.canAnyPieceMove(board.getSquare("g1"), GColor.BLACK);
             }
-            else if (endSquare.getCoordinates().getCoordinate().equals("c1")) {
-                return !startSquare.getPiece().getHasMoved() && boardArray[0][0].getPiece().getName().equals("Rook") && !boardArray[0][0].getPiece().getHasMoved() && boardArray[0][1].getPiece().getName().equals("Empty") && boardArray[0][2].getPiece().getName().equals("Empty") && boardArray[0][3].getPiece().getName().equals("Empty") && !board.canAnyPieceMove(boardArray[0][4], GColor.BLACK) && !board.canAnyPieceMove(boardArray[0][3], GColor.BLACK) && !board.canAnyPieceMove(boardArray[0][2], GColor.BLACK);
+            else if (startSquare.getCoordinates().getCoordinate().equals("c1")) {
+                return boardArray[0][3].getPiece().getName().equals("Rook") && !boardArray[0][0].hasPiece() && !boardArray[0][1].hasPiece() && !boardArray[0][4].hasPiece() && !board.canAnyPieceMove(boardArray[0][4], GColor.BLACK) && !board.canAnyPieceMove(boardArray[0][3], GColor.BLACK) && !board.canAnyPieceMove(boardArray[0][2], GColor.BLACK);
             }
             return false;
         }
         //BLACK
         else {
-            if (endSquare.getCoordinates().getCoordinate().equals("g8")) {
-                return !startSquare.getPiece().getHasMoved() && boardArray[7][7].getPiece().getName().equals("Rook") && !boardArray[7][7].getPiece().getHasMoved() && boardArray[7][5].getPiece().getName().equals("Empty") && boardArray[7][6].getPiece().getName().equals("Empty") && !board.canAnyPieceMove(boardArray[7][4], GColor.WHITE) && !board.canAnyPieceMove(boardArray[7][5], GColor.WHITE) && !board.canAnyPieceMove(boardArray[7][6], GColor.WHITE);
+            if (startSquare.getCoordinates().getCoordinate().equals("g8")) {
+                return boardArray[7][5].getPiece().getName().equals("Rook") && !boardArray[7][5].hasPiece() && !boardArray[7][4].hasPiece() && !board.canAnyPieceMove(boardArray[7][4], GColor.WHITE) && !board.canAnyPieceMove(boardArray[7][5], GColor.WHITE) && !board.canAnyPieceMove(boardArray[7][6], GColor.WHITE);
             }
-            else if (endSquare.getCoordinates().getCoordinate().equals("c8")) {
-                return !startSquare.getPiece().getHasMoved() && boardArray[7][0].getPiece().getName().equals("Rook") && !boardArray[7][0].getPiece().getHasMoved() && boardArray[7][1].getPiece().getName().equals("Empty") && boardArray[7][2].getPiece().getName().equals("Empty") && boardArray[7][3].getPiece().getName().equals("Empty") && !board.canAnyPieceMove(boardArray[7][4], GColor.WHITE) && !board.canAnyPieceMove(boardArray[7][3], GColor.WHITE) && !board.canAnyPieceMove(boardArray[7][2], GColor.WHITE);
+            else if (startSquare.getCoordinates().getCoordinate().equals("c8")) {
+                return boardArray[7][0].getPiece().getName().equals("Rook") && !boardArray[7][0].hasPiece() && !boardArray[7][1].hasPiece() && !boardArray[7][4].hasPiece() && !board.canAnyPieceMove(boardArray[7][4], GColor.WHITE) && !board.canAnyPieceMove(boardArray[7][3], GColor.WHITE) && !board.canAnyPieceMove(boardArray[7][2], GColor.WHITE);
             }
             return false;
         }
