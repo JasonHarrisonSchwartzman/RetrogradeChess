@@ -33,7 +33,9 @@ public class Queen extends Piece{
 
         return bishop.controllingSquare(board, move) || rook.controllingSquare(board, move);
     }
-
+    public boolean canUnMove(Board board, Move move) {
+        return canMove(board, move);
+    }
     public boolean canMove(Board board, Move move) {
         GColor turn = board.getTurn();
 

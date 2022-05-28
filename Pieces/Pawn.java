@@ -207,4 +207,47 @@ public class Pawn extends Piece{
             }
         }
     }
+    public boolean canUnMove(Board board, Move move) {
+        if (!super.canMove(board, move)) {
+            return false;
+        }
+        GColor turn = board.getTurn();
+        Square startSquare = move.getStartSquare();
+        Square endSquare = move.getEndSquare();
+       
+        char endFile = endSquare.getCoordinates().getFile();
+        int endRank = endSquare.getCoordinates().getRank();
+        char startFile = startSquare.getCoordinates().getFile();
+        int startRank = startSquare.getCoordinates().getRank();
+
+        //white
+        if (turn == GColor.WHITE) {
+            if (endRank > startRank || Math.abs(startRank - endRank) > 2 || Math.abs(endFile - startFile) > 1) {
+                return false;
+            }
+            //two squares
+            if (endRank - startRank == 2) {
+                return (startRank == 4) && (!startSquare.getDown().hasPiece()) && (endFile == startFile);
+            }
+            // one square
+            else {
+                return (endFile == startFile) || endSquare.equals(startSquare.getDownLeft()) || endSquare.equals(startSquare.getDownRight());
+            }
+
+        }
+        //black
+        else {
+            if (endRank < startRank || Math.abs(endRank - startRank) > 2 || Math.abs(endFile - startFile) > 1) {
+                return false;
+            }
+            //two squares
+            if (Math.abs(endRank - startRank) == 2) {
+                return (startRank == 5) && !startSquare.getUp().hasPiece() && (endFile == startFile);
+            }
+            // one square
+            else {
+                return (endFile == startFile) || endSquare.equals(startSquare.getUpLeft()) || endSquare.equals(startSquare.getUpRight());
+            }
+        }
+    }
 }

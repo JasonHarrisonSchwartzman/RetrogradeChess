@@ -85,17 +85,16 @@ public class Piece{
 
         // if the the start and end square are the same or if the turn and piece are not the same color 
         //and if the piece on the endSquare is the player's own piece
-        if (startSquare.equals(endSquare) || piece.getColor() != turn || endSquare.getPiece().getColor() == turn) {
-            if (startSquare.equals(endSquare)) {
-                board.debugger("CANT MOVE: YOU ARE NOT MOVING ANYWHER");
-            }
-            if (piece.getColor() != turn) {
-                board.debugger("CANT MOVE: YOU ARE MOVING A PIECE THATS NOT YOURS");
-                board.debugger("YOUR PIECE IS: " + piece.getColor() + " THE CURRENT TURN IS: " + turn);
-            }
-            if (endSquare.getPiece().getColor() == turn) {
-                board.debugger("CANT MOVE: YOUR PIECE IS ON THE END SQUARE");
-            }
+        if (startSquare.equals(endSquare)) {
+            board.debugger("Piece not moving.");
+            return false;
+        }
+        if (piece.getColor() != turn) {
+            board.debugger("Unexpected piece color.");
+            return false;
+        }
+        if (endSquare.getPiece().getColor() == turn) {
+            board.debugger("Cannot move onto square that contains a piece.");
             return false;
         }
         return true;
@@ -110,6 +109,32 @@ public class Piece{
 
     public String getInfo() {
         return toString() + " | Has moved: " + hasMoved;
+    }
+    /**
+     * Checks if not moving, not turn, piece on end square
+     * @param board
+     * @param move
+     * @return can't move if fails conditions above
+     */
+    public boolean canUnMove(Board board, Move move) {
+        GColor turn = board.getTurn();
+        Square startSquare = move.getStartSquare();
+        Square endSquare = move.getEndSquare();
+        Piece piece = move.getPiece();
+
+        if (startSquare.equals(endSquare)) {
+            board.debugger("Piece not moving.");
+            return false;
+        }
+        if (piece.getColor() != turn) {
+            board.debugger("Unexpected piece color.");
+            return false;
+        }
+        if (endSquare.hasPiece()) {
+            board.debugger("Cannot move onto square that contains a piece.");
+            return false;
+        }
+        return true;
     }
 
 }

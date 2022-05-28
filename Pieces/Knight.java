@@ -56,6 +56,10 @@ public class Knight extends Piece{
         return false;
     }
 
+    public boolean canUnMove(Board board, Move move) {
+        return canMove(board, move);
+    }
+
     public boolean canMove(Board board, Move move) {
         if (!super.canMove(board, move)) {
             return false;
@@ -86,4 +90,6 @@ public class Knight extends Piece{
         board.debugger("KNIGHT CANT MOVE: NOT EQUAL TO KNIGHT CAPTURE CONSTANT");
         return false;
     }
+
+
 }

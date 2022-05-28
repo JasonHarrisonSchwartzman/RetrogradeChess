@@ -1,6 +1,7 @@
 package RetrogradeChess;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import RetrogradeChess.Pieces.Bishop;
 import RetrogradeChess.Pieces.GColor;
@@ -16,8 +17,7 @@ public class Board {
     private Square[][] board;
     private GColor turn;
     private ArrayList<Move> moves;
-    //DELETING THIS FOR NOW BECAUSE ITS HARD TO MAINTAIN
-    //private HashMap<Color,ArrayList<Square>> pieceLocation; //HashMap that contains an arraylist of squares where the pieces of each player is
+    private HashMap<GColor,ArrayList<Square>> pieceLocation; //HashMap that contains an arraylist of squares where the pieces of each player is
     private Square capturedPiece; //holds a captured piece if a piece was just captured
     private boolean debug = false;
 
@@ -365,6 +365,20 @@ public class Board {
 
     }
 
+    public boolean canUnMove(Move move) {
+        if (move == null) {
+            return false;
+        }
+        Square startSquare = move.getStartSquare();
+        Square endSquare = move.getEndSquare();
+        Piece piece = startSquare.getPiece();
+        if (piece.canMove(this, move)) {
+            return true;
+        }
+        return true;
+    }
+
+
     /**
      * The highest up canMove function.
      * First will see if the piece can move
@@ -530,9 +544,48 @@ public class Board {
      * Resets the board to the starting position.
      */
     public void resetBoard(){
+        /*
         turn = GColor.WHITE;
         board = new Square[8][8];
         for(int i = 2; i < 6; i++){
+            for(int j = 0; j < 8; j++){
+                board[i][j] = new Square(Conversions.arrayIndicesToCoordinates("" + i + j), new Empty());
+            }
+        }
+        for(int i = 0; i < 8; i++){
+            //sets up pawns and piecelocations
+            board[1][i] = new Square(Conversions.arrayIndicesToCoordinates("" + 1 + i),new Pawn(GColor.WHITE));
+            //pieceLocation.get(Color.WHITE).add(board[1][i]);
+            board[6][i] = new Square(Conversions.arrayIndicesToCoordinates("" + 6 + i),new Pawn(GColor.BLACK));
+            //pieceLocation.get(Color.BLACK).add(board[6][i]);
+        }
+        //sets up pieces
+        board[0][0] = new Square("a1", new Rook(GColor.WHITE));
+        board[0][7] = new Square("h1", new Rook(GColor.WHITE));
+        board[7][0] = new Square("a8", new Rook(GColor.BLACK));
+        board[7][7] = new Square("h8", new Rook(GColor.BLACK));
+        board[0][1] = new Square("b1", new Knight(GColor.WHITE));
+        board[0][6] = new Square("g1", new Knight(GColor.WHITE));
+        board[7][1] = new Square("b8", new Knight(GColor.BLACK));
+        board[7][6] = new Square("g8", new Knight(GColor.BLACK));
+        board[0][2] = new Square("c1", new Bishop(GColor.WHITE));
+        board[0][5] = new Square("f1", new Bishop(GColor.WHITE));
+        board[7][2] = new Square("c8", new Bishop(GColor.BLACK));
+        board[7][5] = new Square("f8", new Bishop(GColor.BLACK));
+        board[0][4] = new Square("e1", new King(GColor.WHITE));
+        board[7][4] = new Square("e8", new King(GColor.BLACK));
+        board[0][3] = new Square("d1", new Queen(GColor.WHITE));
+        board[7][3] = new Square("d8", new Queen(GColor.BLACK));
+        for (int i = 0; i < 8; i++) {
+            //setting up piece locations
+            //pieceLocation.get(Color.WHITE).add(board[0][i]);
+            //pieceLocation.get(Color.BLACK).add(board[7][i]);
+        }
+        setAdjacentSquares();
+        */
+        turn = GColor.WHITE;
+        board = new Square[8][8];
+        for(int i = 1; i < 6; i++){
             for(int j = 0; j < 8; j++){
                 board[i][j] = new Square(Conversions.arrayIndicesToCoordinates("" + i + j), new Empty());
             }

@@ -111,7 +111,9 @@ public class Rook extends Piece{
         }
         return false;
     }
-
+    public boolean canUnMove(Board board, Move move) {
+        return canMove(board, move);
+    }
     public boolean canMove(Board board, Move move) {
         if (!super.canMove(board, move)) {
             return false;
@@ -183,9 +185,5 @@ public class Rook extends Piece{
             return true;
         }
         return false;
-    }
-
-    public static void main(String[]args) {
-        
     }
 }
