@@ -54,7 +54,6 @@ public class King extends Piece{
         if (endSquare.equals(startSquare.getUp()) || endSquare.equals(startSquare.getDown()) || endSquare.equals(startSquare.getLeft()) || endSquare.equals(startSquare.getRight()) || endSquare.equals(startSquare.getUpRight()) || endSquare.equals(startSquare.getUpLeft()) || endSquare.equals(startSquare.getDownLeft()) || endSquare.equals(startSquare.getDownRight())) {
             return true;
         }
-        // castling remember to move the rook: ok yeah i think i did that
         //WHITE
         Square[][] boardArray = board.getBoard();
         if (turn == GColor.WHITE) {

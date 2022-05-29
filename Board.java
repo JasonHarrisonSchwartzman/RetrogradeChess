@@ -540,49 +540,88 @@ public class Board {
         return legalMoves;
     }
 
+    public void readFEN(String FEN) {
+        int rank = 7;
+        int file = 0;
+        for (int i = 0; i < FEN.length(); i++) {
+            char c = FEN.charAt(i);
+            if (!(rank <= 0 && file > 7)) {
+                switch (c) {
+                    case 'p':
+                        board[rank][file] = new Square("" + rank + file, new Pawn(GColor.BLACK));
+                        file++;
+                        break;
+                    case 'P':
+                        board[rank][file] = new Square("" + rank + file, new Pawn(GColor.WHITE));
+                        file++;
+                        break;
+                    case 'n':
+                        board[rank][file] = new Square("" + rank + file, new Knight(GColor.BLACK));
+                        file++;
+                        break;
+                    case 'N':
+                        board[rank][file] = new Square("" + rank + file, new Knight(GColor.WHITE));
+                        file++;
+                        break;
+                    case 'b':
+                        board[rank][file] = new Square("" + rank + file, new Bishop(GColor.BLACK));
+                        file++;
+                        break;
+                    case 'B':
+                        board[rank][file] = new Square("" + rank + file, new Bishop(GColor.WHITE));
+                        file++;
+                        break;
+                    case 'r':
+                        board[rank][file] = new Square("" + rank + file, new Rook(GColor.BLACK));
+                        file++;
+                        break;
+                    case 'R':
+                        board[rank][file] = new Square("" + rank + file, new Rook(GColor.WHITE));
+                        file++;
+                        break;
+                    case 'q':
+                        board[rank][file] = new Square("" + rank + file, new Queen(GColor.BLACK));
+                        file++;
+                        break;
+                    case 'Q':
+                        board[rank][file] = new Square("" + rank + file, new Queen(GColor.WHITE));
+                        file++;
+                        break;
+                    case 'k':
+                        board[rank][file] = new Square("" + rank + file, new King(GColor.BLACK));
+                        file++;
+                        break;
+                    case 'K':
+                        board[rank][file] = new Square("" + rank + file, new King(GColor.WHITE));
+                        file++;
+                        break;
+                    case '/':
+                        file = 0;
+                        rank--;
+                        break;
+                    default:
+                        int num = Integer.parseInt("" + c);
+                        for (int x = 0; x < num; x++) {
+                            board[rank][file] = new Square("" + rank + file, new Empty());
+                            file++;
+                        }
+                }
+            }
+            else {
+                if (c == 'b') {
+                    turn = GColor.BLACK;
+                }
+                if (c == 'w') {
+                    turn = GColor.BLACK;
+                }
+            }
+        }
+    }
+
     /**
      * Resets the board to the starting position.
      */
     public void resetBoard(){
-        /*
-        turn = GColor.WHITE;
-        board = new Square[8][8];
-        for(int i = 2; i < 6; i++){
-            for(int j = 0; j < 8; j++){
-                board[i][j] = new Square(Conversions.arrayIndicesToCoordinates("" + i + j), new Empty());
-            }
-        }
-        for(int i = 0; i < 8; i++){
-            //sets up pawns and piecelocations
-            board[1][i] = new Square(Conversions.arrayIndicesToCoordinates("" + 1 + i),new Pawn(GColor.WHITE));
-            //pieceLocation.get(Color.WHITE).add(board[1][i]);
-            board[6][i] = new Square(Conversions.arrayIndicesToCoordinates("" + 6 + i),new Pawn(GColor.BLACK));
-            //pieceLocation.get(Color.BLACK).add(board[6][i]);
-        }
-        //sets up pieces
-        board[0][0] = new Square("a1", new Rook(GColor.WHITE));
-        board[0][7] = new Square("h1", new Rook(GColor.WHITE));
-        board[7][0] = new Square("a8", new Rook(GColor.BLACK));
-        board[7][7] = new Square("h8", new Rook(GColor.BLACK));
-        board[0][1] = new Square("b1", new Knight(GColor.WHITE));
-        board[0][6] = new Square("g1", new Knight(GColor.WHITE));
-        board[7][1] = new Square("b8", new Knight(GColor.BLACK));
-        board[7][6] = new Square("g8", new Knight(GColor.BLACK));
-        board[0][2] = new Square("c1", new Bishop(GColor.WHITE));
-        board[0][5] = new Square("f1", new Bishop(GColor.WHITE));
-        board[7][2] = new Square("c8", new Bishop(GColor.BLACK));
-        board[7][5] = new Square("f8", new Bishop(GColor.BLACK));
-        board[0][4] = new Square("e1", new King(GColor.WHITE));
-        board[7][4] = new Square("e8", new King(GColor.BLACK));
-        board[0][3] = new Square("d1", new Queen(GColor.WHITE));
-        board[7][3] = new Square("d8", new Queen(GColor.BLACK));
-        for (int i = 0; i < 8; i++) {
-            //setting up piece locations
-            //pieceLocation.get(Color.WHITE).add(board[0][i]);
-            //pieceLocation.get(Color.BLACK).add(board[7][i]);
-        }
-        setAdjacentSquares();
-        */
         turn = GColor.WHITE;
         board = new Square[8][8];
         for(int i = 1; i < 6; i++){
