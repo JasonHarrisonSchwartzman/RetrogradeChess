@@ -31,7 +31,9 @@ public class ChessGameGUI extends Canvas{
 static boolean dbugmode = false;
 static boolean test = true;
 static int turn = 1;
-static Board board = new Board();
+static JFrame prompt = new JFrame();
+static String FEN = JOptionPane.showInputDialog(prompt, "Enter FEN:");
+static Board board = new Board(FEN);
 static DefaultTableModel movesHistory;
 static ArrayList<String> HMoves = new ArrayList<String>();
 static ArrayList<Integer> predictedMove = new ArrayList<Integer>();

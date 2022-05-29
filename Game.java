@@ -23,7 +23,7 @@ public class Game{
      * Sets up the game
      */
     public void newGame() {
-        board = new Board();
+        board = new Board("");
         turn = GColor.WHITE;
         moves = new ArrayList<Move>();
     }

@@ -11,7 +11,7 @@ public class Pawn extends Piece{
     public Pawn(GColor color){
         super("Pawn", color);
         if (color == GColor.WHITE)
-            this.symbol = "[♙ ]";
+            this.symbol = "[♟ ]"; // U+265F  [♙ ]
         else
             this.symbol = "[♟︎ ]";
     }
@@ -198,6 +198,9 @@ public class Pawn extends Piece{
                     // en passant remember to delete the pawn
                     else {
                         Move lastMove = board.getLastMove();
+                        if (lastMove == null) {
+                            return false;
+                        }
                         Square lastMoveStartSquare = lastMove.getStartSquare();
                         Square lastMoveEndSquare = lastMove.getEndSquare();
                         Piece lastMovePiece = lastMove.getPiece();

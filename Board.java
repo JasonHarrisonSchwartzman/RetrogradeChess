@@ -1,7 +1,7 @@
 package RetrogradeChess;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+//import java.util.HashMap;
 
 import RetrogradeChess.Pieces.Bishop;
 import RetrogradeChess.Pieces.GColor;
@@ -17,7 +17,7 @@ public class Board {
     private Square[][] board;
     private GColor turn;
     private ArrayList<Move> moves;
-    private HashMap<GColor,ArrayList<Square>> pieceLocation; //HashMap that contains an arraylist of squares where the pieces of each player is
+    //private HashMap<GColor,ArrayList<Square>> pieceLocation; //HashMap that contains an arraylist of squares where the pieces of each player is
     private Square capturedPiece; //holds a captured piece if a piece was just captured
     private boolean debug = false;
 
@@ -59,18 +59,26 @@ public class Board {
         }
             return GColor.WHITE;
     }
+    public Board() {
+        resetBoard();
+    }
 
     /**
      * Creates a new Board object and sets it up
      */
-    public Board() {
+    public Board(String FEN) {
         moves = new ArrayList<Move>();
         //setting up pieceLocations
         ///pieceLocation = new HashMap<Color,ArrayList<Square>>();
         //pieceLocation.put(Color.WHITE, new ArrayList<Square>());
         //pieceLocation.put(Color.BLACK, new ArrayList<Square>());
         //resets the board (initializes it)
-        resetBoard();
+        if (FEN.equals("")) {
+            resetBoard();
+        }
+        else {
+            readFEN(FEN);
+        }
     }
     /**
      * Returns the last move in the move arraylist
@@ -370,7 +378,7 @@ public class Board {
             return false;
         }
         Square startSquare = move.getStartSquare();
-        Square endSquare = move.getEndSquare();
+        //Square endSquare = move.getEndSquare();
         Piece piece = startSquare.getPiece();
         if (piece.canMove(this, move)) {
             return true;
@@ -543,56 +551,57 @@ public class Board {
     public void readFEN(String FEN) {
         int rank = 7;
         int file = 0;
+        board = new Square[8][8];
         for (int i = 0; i < FEN.length(); i++) {
             char c = FEN.charAt(i);
-            if (!(rank <= 0 && file > 7)) {
+            if (rank > 0 || file <= 7) {
                 switch (c) {
                     case 'p':
-                        board[rank][file] = new Square("" + rank + file, new Pawn(GColor.BLACK));
+                        board[rank][file] = new Square(Conversions.arrayIndicesToCoordinates("" + rank + file), new Pawn(GColor.BLACK));
                         file++;
                         break;
                     case 'P':
-                        board[rank][file] = new Square("" + rank + file, new Pawn(GColor.WHITE));
+                        board[rank][file] = new Square(Conversions.arrayIndicesToCoordinates("" + rank + file), new Pawn(GColor.WHITE));
                         file++;
                         break;
                     case 'n':
-                        board[rank][file] = new Square("" + rank + file, new Knight(GColor.BLACK));
+                        board[rank][file] = new Square(Conversions.arrayIndicesToCoordinates("" + rank + file), new Knight(GColor.BLACK));
                         file++;
                         break;
                     case 'N':
-                        board[rank][file] = new Square("" + rank + file, new Knight(GColor.WHITE));
+                        board[rank][file] = new Square(Conversions.arrayIndicesToCoordinates("" + rank + file), new Knight(GColor.WHITE));
                         file++;
                         break;
                     case 'b':
-                        board[rank][file] = new Square("" + rank + file, new Bishop(GColor.BLACK));
+                        board[rank][file] = new Square(Conversions.arrayIndicesToCoordinates("" + rank + file), new Bishop(GColor.BLACK));
                         file++;
                         break;
                     case 'B':
-                        board[rank][file] = new Square("" + rank + file, new Bishop(GColor.WHITE));
+                        board[rank][file] = new Square(Conversions.arrayIndicesToCoordinates("" + rank + file), new Bishop(GColor.WHITE));
                         file++;
                         break;
                     case 'r':
-                        board[rank][file] = new Square("" + rank + file, new Rook(GColor.BLACK));
+                        board[rank][file] = new Square(Conversions.arrayIndicesToCoordinates("" + rank + file), new Rook(GColor.BLACK));
                         file++;
                         break;
                     case 'R':
-                        board[rank][file] = new Square("" + rank + file, new Rook(GColor.WHITE));
+                        board[rank][file] = new Square(Conversions.arrayIndicesToCoordinates("" + rank + file), new Rook(GColor.WHITE));
                         file++;
                         break;
                     case 'q':
-                        board[rank][file] = new Square("" + rank + file, new Queen(GColor.BLACK));
+                        board[rank][file] = new Square(Conversions.arrayIndicesToCoordinates("" + rank + file), new Queen(GColor.BLACK));
                         file++;
                         break;
                     case 'Q':
-                        board[rank][file] = new Square("" + rank + file, new Queen(GColor.WHITE));
+                        board[rank][file] = new Square(Conversions.arrayIndicesToCoordinates("" + rank + file), new Queen(GColor.WHITE));
                         file++;
                         break;
                     case 'k':
-                        board[rank][file] = new Square("" + rank + file, new King(GColor.BLACK));
+                        board[rank][file] = new Square(Conversions.arrayIndicesToCoordinates("" + rank + file), new King(GColor.BLACK));
                         file++;
                         break;
                     case 'K':
-                        board[rank][file] = new Square("" + rank + file, new King(GColor.WHITE));
+                        board[rank][file] = new Square(Conversions.arrayIndicesToCoordinates("" + rank + file), new King(GColor.WHITE));
                         file++;
                         break;
                     case '/':
@@ -602,7 +611,7 @@ public class Board {
                     default:
                         int num = Integer.parseInt("" + c);
                         for (int x = 0; x < num; x++) {
-                            board[rank][file] = new Square("" + rank + file, new Empty());
+                            board[rank][file] = new Square(Conversions.arrayIndicesToCoordinates("" + rank + file), new Empty());
                             file++;
                         }
                 }
@@ -612,10 +621,11 @@ public class Board {
                     turn = GColor.BLACK;
                 }
                 if (c == 'w') {
-                    turn = GColor.BLACK;
+                    turn = GColor.WHITE;
                 }
             }
         }
+        setAdjacentSquares();
     }
 
     /**
@@ -774,10 +784,9 @@ public class Board {
         return true;
     }
     public static void main(String[]args) {
-        Board b = new Board();
+        Board b = new Board("r1bqkbnr/2p5/p4pp1/2pppPPp/4P2P/2N2N2/PPPP4/R1BQK2R w");
         b.printBoard();
-        System.out.println(b.generateAllLegalMoves(GColor.WHITE));
-     
+        //System.out.println(b.generateAllLegalMoves(GColor.WHITE))
 
  
     }
